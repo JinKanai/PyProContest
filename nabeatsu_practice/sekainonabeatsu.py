@@ -6,7 +6,7 @@ class SekainoNabeatsu:
 
     def __init__(self, upper_limit):
         self.places = ['','ジュウ','ヒャク','セン','マン']
-        self.numbers = ['','イチ','ニ','サン','ヨン','ゴ','ロク','ナナ','ハチ','キュウ']
+        self.numbers = ['','イチ','ニ','サ～ン','ヨン','ゴ','ロク','ナナ','ハチ','キュウ']
         self.upper_limit = upper_limit + 1
         self.nabeatsu_number = []
         self._main_loop()
@@ -30,13 +30,14 @@ class SekainoNabeatsu:
         return(self._ahonize(result))
 
     def _ahonize(self,nabeatsu_number):
-        p  = len(nabeatsu_number) -1
-        r = nabeatsu_number[:p] + 'ー' + nabeatsu_number[p:]
-        return r + '！！'
+        r = nabeatsu_number + '！！'
+        if 'サ～ン！！' not in r:
+            p  = len(nabeatsu_number) -1
+            r = nabeatsu_number[:p] + '～' + nabeatsu_number[p:] + '！！'
+        return r
 
 def main():
-    sekaino = SekainoNabeatsu(50
-    )
+    sekaino = SekainoNabeatsu(1000)
     for i in sekaino.nabeatsu_number:
         print(i)
 
