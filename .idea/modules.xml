@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/PyProContest.iml" filepath="$PROJECT_DIR$/.idea/PyProContest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/irohani-generator/irohani.iml" filepath="$PROJECT_DIR$/irohani-generator/irohani.iml" />
     </modules>
   </component>
 </project>

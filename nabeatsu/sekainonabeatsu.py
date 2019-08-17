@@ -1,7 +1,17 @@
-
 class SekainoNabeatsu:
     """
-    与えられた数までのナベアツ数をリストで返す
+
+    世界のナベアツ数を返すクラス
+
+    Parameters
+    ----------
+    stop_number : int
+        ナベアツ数を得たい上限数
+
+    Returns
+    -------
+    list
+         通常数とナベアツ数のリスト
     """
 
     def __init__(self, stop_number):
@@ -23,7 +33,8 @@ class SekainoNabeatsu:
 
     def _make_nabeatsu(self, org_num):
         """
-        渡された数をナベアツ数に変換
+        渡された数からナベアツ数を抽出
+        > ナベアツ数・・・アホになる数のこと
         """
         result = ''
         str_num = str(org_num)
@@ -33,7 +44,7 @@ class SekainoNabeatsu:
 
         for i, num in enumerate(str_num):
             # 今処理している桁
-            current_place = (digits-i)-1
+            current_place = (digits - i) - 1
 
             # イチヒャク、イチセンとかいう記載にならないようにする判定if文
             # 取り出してる数字が１でなくかつ2桁以上の数字のときのみナベアツ数に変換
@@ -41,11 +52,11 @@ class SekainoNabeatsu:
             if current_place == 0 or num != '1' and digits != 1:
                 result += self.numbers[int(num)]
             result += self.places[current_place]
-        return(self._ahonize(result))
+        return (self._ahonize(result))
 
     def _ahonize(self, nabeatsu_number):
         """
-        ナベアツ数をアホにする処理
+        ナベアツ数をアホ化する処理
         """
 
         # 先に末尾に！！を付けて、次のif文で一の位を見つけやすくする
@@ -61,8 +72,13 @@ class SekainoNabeatsu:
 
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser(description="世界のナベアツ")
+    parser.add_argument("count", type=int, help="ナベアツ上限数（１０万まで対応）")
+    args = parser.parse_args()
+
     # 実行したい数をSekainoNabeatuクラスに渡してインスタンス化
-    sekaino = SekainoNabeatsu(1000)
+    sekaino = SekainoNabeatsu(args.count)
 
     for i in sekaino.nabeatsu_number:
         print(i)
