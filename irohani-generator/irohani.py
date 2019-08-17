@@ -2,12 +2,13 @@ class IrohaniGenerator:
 
     def __init__(self):
         self.irohanibun = set()
+        self.irohani_dict = {'sakubun_list': []}
         self.main_loop()
 
     def main_loop(self):
         import random
-        while len(self.irohanibun) < 48:
-            target = random.randrange(0x3042, 0x3094)
+        while len(self.irohanibun) < 47:
+            target = random.randrange(0x3042, 0x3093)
             if self.can_listed(target):
                 self.irohanibun.add(chr(target))
 
