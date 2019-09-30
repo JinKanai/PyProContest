@@ -14,18 +14,19 @@ class SekainoNabeatsu:
          通常数とナベアツ数のリスト
     """
 
-    def __init__(self, stop_number):
-        self.places = ['', 'ジュウ', 'ヒャク', 'セン', 'マン']
+    def __init__(self, stop_number, start_number):
+        self.start_number = start_number
+        self.stop_number = stop_number
+        self.places = ['', 'ジュウ', 'ヒャク', 'セン', 'マン', 'ジュウ','ヒャク', 'セン', 'オク']
 
         # ３は必ずアホになるのであらかじめ～を付けとく
         self.numbers = ['', 'イチ', 'ニ', 'サ～ン',
                         'ヨン', 'ゴ', 'ロク', 'ナナ', 'ハチ', 'キュウ']
-        self.stop_number = stop_number + 1
         self.nabeatsu_number = []
         self._main_loop()
 
     def _main_loop(self):
-        for i in range(1, self.stop_number):
+        for i in range(self.start_number, self.stop_number + 1):
             n = i
             if i % 3 == 0 or '3' in str(i):
                 n = self._make_nabeatsu(i)
@@ -71,18 +72,25 @@ class SekainoNabeatsu:
         return r
 
 
-def main():
+def _main():
     import argparse
     parser = argparse.ArgumentParser(description="世界のナベアツ")
     parser.add_argument("count", type=int, help="ナベアツ上限数（１０万まで対応）")
+    parser.add_argument("--start", type=int, help="開始する数")
     args = parser.parse_args()
 
+    start_number = 1
+    if args.start:
+        start_number = args.start
+
     # 実行したい数をSekainoNabeatuクラスに渡してインスタンス化
-    sekaino = SekainoNabeatsu(args.count)
+    sekaino = SekainoNabeatsu(args.count, start_number )
 
     for i in sekaino.nabeatsu_number:
         print(i)
 
+    return 0
 
 if __name__ == '__main__':
-    main()
+    import sys
+    sys.exit(_main())
