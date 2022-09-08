@@ -11,13 +11,13 @@ class SekainoNabeatsu:
     Returns
     -------
     list
-         通常数とナベアツ数のリスト
+        通常数とナベアツ数のリスト
     """
 
     def __init__(self, stop_number, start_number):
         self.start_number = start_number
         self.stop_number = stop_number
-        self.places = ['', 'ジュウ', 'ヒャク', 'セン', 'マン', 'ジュウ','ヒャク', 'セン', 'オク']
+        self.places = ['', 'ジュウ', 'ヒャク', 'セン', 'マン', 'ジュウ', 'ヒャク', 'セン', 'オク']
 
         # ３は必ずアホになるのであらかじめ～を付けとく
         self.numbers = ['', 'イチ', 'ニ', 'サ～ン',
@@ -28,14 +28,15 @@ class SekainoNabeatsu:
     def _main_loop(self):
         for i in range(self.start_number, self.stop_number + 1):
             n = i
+            # ナベアツ数を検出
             if i % 3 == 0 or '3' in str(i):
+                # ナベアツ数だった場合は、ナベアツ化（カタカナ化）する
                 n = self._make_nabeatsu(i)
             self.nabeatsu_number.append(n)
 
     def _make_nabeatsu(self, org_num):
         """
-        渡された数からナベアツ数を抽出
-        > ナベアツ数・・・アホになる数のこと
+        ナベアツ数をナベアツ化（カタカナ化）
         """
         result = ''
         str_num = str(org_num)
@@ -63,7 +64,7 @@ class SekainoNabeatsu:
         # 先に末尾に！！を付けて、次のif文で一の位を見つけやすくする
         r = nabeatsu_number + '！！'
 
-        # 1の位のサ～ンに二重で～が付かないようにする判定if文
+        # 〜がつくのは1の位のみなので、1の位のサ～ンに二重で～が付かないようにする
         if 'サ～ン！！' not in r:
             p = len(nabeatsu_number) - 1
             # 1の位以外のナベアツ数をアホにするために、最後の1文字目の前に～を挿入。
@@ -75,7 +76,8 @@ class SekainoNabeatsu:
 def _main():
     import argparse
     parser = argparse.ArgumentParser(description="世界のナベアツ")
-    parser.add_argument("count", type=int, help="ナベアツ上限数（１０万まで対応）")
+    parser.add_argument("count", type=int,
+                        help="ナベアツ上限数（999,999,999まで対応）")
     parser.add_argument("--start", type=int, help="開始する数")
     args = parser.parse_args()
 
@@ -84,12 +86,13 @@ def _main():
         start_number = args.start
 
     # 実行したい数をSekainoNabeatuクラスに渡してインスタンス化
-    sekaino = SekainoNabeatsu(args.count, start_number )
+    sekaino = SekainoNabeatsu(args.count, start_number)
 
     for i in sekaino.nabeatsu_number:
         print(i)
 
     return 0
+
 
 if __name__ == '__main__':
     import sys
